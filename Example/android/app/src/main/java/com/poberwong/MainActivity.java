@@ -1,4 +1,4 @@
-package com.example;
+package com.poberwong;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactPackage;
