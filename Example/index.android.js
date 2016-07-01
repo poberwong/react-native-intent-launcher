@@ -5,6 +5,7 @@
  */
 
 import React, { Component } from 'react';
+import IntentLauncher from './IntentLauncher'
 import {
   AppRegistry,
   StyleSheet,
@@ -16,7 +17,8 @@ class Example extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
+        <Text style={styles.welcome}
+          onPress={this.jumpToSettings}>
           Welcome to React Native!
         </Text>
         <Text style={styles.instructions}>
@@ -28,6 +30,10 @@ class Example extends Component {
       </View>
     );
   }
+
+  jumpToSettings = () => {
+    IntentLauncher.startActivity({intent: 'android.settings.APN_SETTINGS'})
+  };
 }
 
 const styles = StyleSheet.create({
