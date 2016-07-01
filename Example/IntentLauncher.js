@@ -1,10 +1,9 @@
 import { NativeModules } from 'react-native'
 import React from 'react'
 let nativeCaller = NativeModules.IntentLauncher
-/*payload: {intent: {}}*/
+/*payload: {action: {}}*/
 export default {
 	startActivity (payload) {
-		nativeCaller.startActivity(payload.intent)
+		nativeCaller.startActivity(payload.action, payload.extra || { pober: 'wong' })
 	}
 }
-

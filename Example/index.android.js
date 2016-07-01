@@ -32,7 +32,7 @@ class Example extends Component {
   }
 
   jumpToSettings = () => {
-    IntentLauncher.startActivity({intent: 'android.settings.APN_SETTINGS'})
+    IntentLauncher.startActivity({action: 'android.settings.APN_SETTINGS', extra: {hello: 'world'}})
   };
 }
 
