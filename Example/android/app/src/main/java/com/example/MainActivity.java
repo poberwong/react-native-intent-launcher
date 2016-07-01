@@ -1,6 +1,7 @@
-package com.poberwong;
+package com.example;
 
 import com.facebook.react.ReactActivity;
+import com.poberwong.IntentLauncherPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 

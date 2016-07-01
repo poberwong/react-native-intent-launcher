@@ -4,8 +4,7 @@
  * @flow
  */
 import React, { Component } from 'react';
-import IntentLauncher from './IntentLauncher'
-import IntentConstant from './IntentConstant'
+import IntentLauncher, { IntentConstant } from 'react-native-intent-launcher'
 import {
   AppRegistry,
   StyleSheet,
