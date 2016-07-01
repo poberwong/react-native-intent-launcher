@@ -1,19 +1,19 @@
 {
-  "name": "react-native-start-activity",
+  "name": "react-native-intent-launcher",
   "version": "0.0.1",
-  "description": "call native function 'startActivity' in react-native",
+  "description": "call native function about intent in react-native android",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Bob1993/react-native-start-activity.git"
+    "url": "git+https://github.com/Bob1993/react-native-intent-launcher.git"
   },
   "author": "poberwong",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Bob1993/react-native-start-activity/issues"
+    "url": "https://github.com/Bob1993/react-native-intent-launcher/issues"
   },
-  "homepage": "https://github.com/Bob1993/react-native-start-activity#readme"
+  "homepage": "https://github.com/Bob1993/react-native-intent-launcher#readme"
 }
