@@ -3,9 +3,9 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-
 import React, { Component } from 'react';
 import IntentLauncher from './IntentLauncher'
+import IntentConstant from './IntentConstant'
 import {
   AppRegistry,
   StyleSheet,
@@ -32,7 +32,7 @@ class Example extends Component {
   }
 
   jumpToSettings = () => {
-    IntentLauncher.startActivity({action: 'android.settings.APN_SETTINGS', extra: {hello: 'world'}})
+    IntentLauncher.startActivity({action: 'android.settings.APN_SETTINGS', flags: IntentConstant.FLAG_ACTIVITY_NEW_TASK})
   };
 }
 
