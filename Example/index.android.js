@@ -31,7 +31,7 @@ class Example extends Component {
   }
 
   jumpToSettings = () => {
-    IntentLauncher.startActivity({action: 'android.settings.APN_SETTINGS', flags: IntentConstant.FLAG_ACTIVITY_NEW_TASK})
+    IntentLauncher.startActivity({action: 'android.settings.APPLICATION_DETAILS_SETTINGS', data: 'package:com.example'})
   };
 }
 
