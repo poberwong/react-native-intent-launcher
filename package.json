@@ -1,6 +1,6 @@
 {
   "name": "react-native-intent-launcher",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "call native function about intent in react-native android",
   "main": "index.js",
   "scripts": {
