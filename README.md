@@ -5,9 +5,9 @@ call native function `startActivity` in react-native
 You can call native function `startActivity` in react-native to do something with `Intent` which can only be solved with android native code
 
 ## Installation
-Run `rnpm install react-native-orientation`
-> Note: rnpm will install and link the library automatically.  
-> of course, you can run `npm install react-native-orientation` and then `rnpm link`
+
+1. `npm install react-native-orientation` 
+2. `rnpm link`
 
 ## Usage
 ```
@@ -28,7 +28,7 @@ you can view the code in [Example](https://github.com/Bob1993/react-native-inten
 * `flags` String
 * `extra` Object
 
-In the `InstentConstant`, we provide some constants for these properties, you can look up document provided by google to find out property we didn't support currently.
+In the `IntentConstant`, we provide some constants for these properties, you can look up document provided by google to find out property we didn't support currently.
 
 ## License
 *MIT*
