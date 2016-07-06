@@ -1,4 +1,4 @@
-package com.poberwong;
+package com.poberwong.launcher;
 
 import android.app.Activity;
 import android.content.Intent;

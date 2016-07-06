@@ -1,4 +1,4 @@
-package com.poberwong;
+package com.poberwong.launcher;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
