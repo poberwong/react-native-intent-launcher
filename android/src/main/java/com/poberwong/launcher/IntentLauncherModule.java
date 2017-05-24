@@ -2,30 +2,29 @@ package com.poberwong.launcher;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.ComponentName;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContextBaseJavaModule;
-import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.*;
 
 import java.io.Console;
 
 /**
  * Created by poberwong on 16/6/30.
  */
-public class IntentLauncherModule extends ReactContextBaseJavaModule {
+public class IntentLauncherModule extends ReactContextBaseJavaModule implements ActivityEventListener {
     private static final String ATTR_ACTION = "action";
     private static final String ATTR_CATEGORY = "category";
     private static final String TAG_EXTRA = "extra";
     private static final String ATTR_DATA = "data";
     private static final String ATTR_FLAGS = "flags";
+    Promise promise;
 
     public IntentLauncherModule(ReactApplicationContext reactContext) {
         super(reactContext);
+        reactContext.addActivityEventListener(this);
     }
 
     @Override
@@ -39,23 +38,42 @@ public class IntentLauncherModule extends ReactContextBaseJavaModule {
      * getReactApplicationContext().startActivity(intent);
      */
     @ReactMethod
-    public void startActivity(ReadableMap params){
-        Intent intent = new Intent();
-        if (params.hasKey(ATTR_DATA)) {
-            intent.setData(Uri.parse(params.getString(ATTR_DATA)));
+    public void startActivity(ReadableMap params, final Promise promise){
+        this.promise = promise;
+        try {
+          ComponentName cn = new ComponentName(params.getString(ATTR_DATA), params.getString(ATTR_ACTION));
+          Intent intent = new Intent();
+          intent.setComponent(cn);
+          Log.d("IntentLauncherModule", "Opening");
+          if (params.hasKey(TAG_EXTRA)) {
+              intent.putExtras(Arguments.toBundle(params.getMap(TAG_EXTRA)));
+          }
+          if (params.hasKey(ATTR_FLAGS)) {
+              intent.addFlags(params.getInt(ATTR_FLAGS));
+          }
+          if (params.hasKey(ATTR_CATEGORY)) {
+              intent.addCategory(params.getString(ATTR_CATEGORY));
+          }
+          getReactApplicationContext().startActivityForResult(intent, 12, null); // 暂时使用当前应用的任务栈
+        } catch (Exception e) {
+          promise.reject("Could not open intent");
         }
-        if (params.hasKey(TAG_EXTRA)) {
-            intent.putExtras(Arguments.toBundle(params.getMap(TAG_EXTRA)));
-        }
-        if (params.hasKey(ATTR_FLAGS)) {
-            intent.addFlags(params.getInt(ATTR_FLAGS));
-        }
-        if (params.hasKey(ATTR_CATEGORY)) {
-            intent.addCategory(params.getString(ATTR_CATEGORY));
-        }
-        if (params.hasKey(ATTR_ACTION)) {
-            intent.setAction(params.getString(ATTR_ACTION));
-        }
-        getReactApplicationContext().startActivityForResult(intent, 0, null); // 暂时使用当前应用的任务栈
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) { }
+
+    @Override
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+      if (requestCode != 12) {
+        return;
+      }
+      WritableMap params;
+      Bundle extras = data.getExtras();
+
+      params = Arguments.fromBundle(extras);
+
+      this.promise.resolve(params);
+
     }
 }
