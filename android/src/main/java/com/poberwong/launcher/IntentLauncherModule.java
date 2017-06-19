@@ -10,6 +10,8 @@ import android.util.Log;
 import com.facebook.react.bridge.*;
 
 import java.io.Console;
+import java.util.Set;
+import java.util.Iterator;
 
 /**
  * Created by poberwong on 16/6/30.
@@ -56,7 +58,27 @@ public class IntentLauncherModule extends ReactContextBaseJavaModule implements 
           }
           getReactApplicationContext().startActivityForResult(intent, 12, null); // 暂时使用当前应用的任务栈
         } catch (Exception e) {
-          promise.reject("Could not open intent");
+          promise.reject("ERROR", "Could not open intent");
+        }
+    }
+
+    @ReactMethod
+    public void startActivityOnlyIntent (ReadableMap params, final Promise promise) {
+        this.promise = promise;
+        try {
+            Intent intent = new Intent(params.getString(ATTR_DATA));
+            if (params.hasKey(TAG_EXTRA)) {
+                intent.putExtras(Arguments.toBundle(params.getMap(TAG_EXTRA)));
+            }
+            if (params.hasKey(ATTR_FLAGS)) {
+                intent.addFlags(params.getInt(ATTR_FLAGS));
+            }
+            if (params.hasKey(ATTR_CATEGORY)) {
+                intent.addCategory(params.getString(ATTR_CATEGORY));
+            }
+            getReactApplicationContext().startActivityForResult(intent, 12, null); // 暂时使用当前应用的任务栈
+        } catch (Exception e) {
+            promise.reject("ERROR", "Could not open intent");
         }
     }
 
@@ -68,10 +90,26 @@ public class IntentLauncherModule extends ReactContextBaseJavaModule implements 
       if (requestCode != 12) {
         return;
       }
-      WritableMap params;
+      WritableMap params = Arguments.createMap();
       Bundle extras = data.getExtras();
 
-      params = Arguments.fromBundle(extras);
+        Set<String> keys = extras.keySet();
+        Iterator<String> it = keys.iterator();
+        Log.e("LGC","Dumping Intent start");
+        while (it.hasNext()) {
+            String key = it.next();
+            if (extras.get(key) instanceof String) {
+                params.putString(key, (String) extras.get(key));
+            }
+
+            if (extras.get(key) instanceof Integer) {
+                params.putInt(key, (Integer) extras.get(key));
+            }
+
+            Log.e("LGC", "[" + key + "=" + extras.get(key) + "]");
+        }
+
+      // params = Arguments.fromBundle(extras);
 
       this.promise.resolve(params);
 
