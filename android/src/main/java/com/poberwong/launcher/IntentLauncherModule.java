@@ -98,6 +98,7 @@ public class IntentLauncherModule extends ReactContextBaseJavaModule implements 
         Log.e("LGC","Dumping Intent start");
         while (it.hasNext()) {
             String key = it.next();
+            
             if (extras.get(key) instanceof String) {
                 params.putString(key, (String) extras.get(key));
             }
@@ -106,6 +107,14 @@ public class IntentLauncherModule extends ReactContextBaseJavaModule implements 
                 params.putInt(key, (Integer) extras.get(key));
             }
 
+            if (extras.get(key) instanceof Double) {
+                params.putDouble(key, (Double) extras.get(key));
+            }
+
+            if (extras.get(key) instanceof Boolean) {
+                params.putBoolean(key, (Boolean) extras.get(key));
+            }
+            
             Log.e("LGC", "[" + key + "=" + extras.get(key) + "]");
         }
 
