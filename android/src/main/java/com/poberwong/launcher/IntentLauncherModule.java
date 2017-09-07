@@ -17,6 +17,7 @@ import java.util.Iterator;
  * Created by poberwong on 16/6/30.
  */
 public class IntentLauncherModule extends ReactContextBaseJavaModule implements ActivityEventListener {
+    private static final int REQUEST_CODE = 12;
     private static final String ATTR_ACTION = "action";
     private static final String ATTR_TYPE = "type";
     private static final String ATTR_CATEGORY = "category";
@@ -75,9 +76,9 @@ public class IntentLauncherModule extends ReactContextBaseJavaModule implements 
             if (params.hasKey(ATTR_CATEGORY)) {
                 intent.addCategory(params.getString(ATTR_CATEGORY));
             }
-            getReactApplicationContext().startActivityForResult(intent, 12, null); // 暂时使用当前应用的任务栈
-        } catch (Exception e) {
-            promise.reject("ERROR", "Could not open intent");
+            getReactApplicationContext().startActivityForResult(intent, REQUEST_CODE, null); // 暂时使用当前应用的任务栈
+        } catch (Exception ex) {
+            promise.reject("ERROR", "Could not open intent", ex);
         }
     }
 
@@ -86,41 +87,25 @@ public class IntentLauncherModule extends ReactContextBaseJavaModule implements 
     }
 
     @Override
-    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
-        if (requestCode != 12) {
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent intent) {
+        if (requestCode != REQUEST_CODE) {
             return;
         }
         WritableMap params = Arguments.createMap();
-        if (data != null) {
-            Bundle extras = data.getExtras();
+        if (intent != null) {
+            params.putInt("resultCode", resultCode);
 
-            Set<String> keys = extras.keySet();
-            Iterator<String> it = keys.iterator();
-            Log.e("LGC", "Dumping Intent start");
-            while (it.hasNext()) {
-                String key = it.next();
+            Uri data = intent.getData();
+            if (data != null) {
+                params.putString("data", data.toString());
+            }
 
-                if (extras.get(key) instanceof String) {
-                    params.putString(key, (String) extras.get(key));
-                }
-
-                if (extras.get(key) instanceof Integer) {
-                    params.putInt(key, (Integer) extras.get(key));
-                }
-
-                if (extras.get(key) instanceof Double) {
-                    params.putDouble(key, (Double) extras.get(key));
-                }
-
-                if (extras.get(key) instanceof Boolean) {
-                    params.putBoolean(key, (Boolean) extras.get(key));
-                }
-
-                Log.e("LGC", "[" + key + "=" + extras.get(key) + "]");
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                params.putMap("extra", Arguments.fromBundle(extras));
             }
         }
 
         this.promise.resolve(params);
-
     }
 }
