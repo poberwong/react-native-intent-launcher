@@ -18,7 +18,7 @@ public class IntentLauncherPackage implements ReactPackage{
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         return Arrays.<NativeModule>asList(new IntentLauncherModule(reactContext)); // 返回一个NativeModule范型的数组就ok
     }
-    
+
     public List<Class<? extends JavaScriptModule>> createJSModules() {
         return Collections.emptyList();
     }
