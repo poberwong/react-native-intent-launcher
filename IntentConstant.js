@@ -659,7 +659,7 @@ export default class Intent {
      * A synonym for {@link #ACTION_VIEW}, the "standard" action that is
      * performed on a piece of data.
      */
-    static ACTION_DEFAULT = Intent.ACTION_VIEW;
+    // static ACTION_DEFAULT = Intent.ACTION_VIEW;
 
     /**
      * Used to indicate that some piece of data should be attached to some other
@@ -4184,7 +4184,7 @@ export default class Intent {
      * @see android.R.attr#documentLaunchMode
      * @see #FLAG_ACTIVITY_MULTIPLE_TASK
      */
-    static FLAG_ACTIVITY_NEW_DOCUMENT = Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET;
+    // static FLAG_ACTIVITY_NEW_DOCUMENT = Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET;
     /**
      * If set, this flag will prevent the normal {@link android.app.Activity#onUserLeaveHint}
      * callback from occurring on the current frontmost activity before it is
@@ -4317,9 +4317,9 @@ export default class Intent {
     /**
      * @hide Flags that can't be changed with PendingIntent.
      */
-    static IMMUTABLE_FLAGS = Intent.FLAG_GRANT_READ_URI_PERMISSION |
-            Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION |
-            Intent.FLAG_GRANT_PREFIX_URI_PERMISSION;
+    // static IMMUTABLE_FLAGS = Intent.FLAG_GRANT_READ_URI_PERMISSION |
+    //         Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION |
+    //         Intent.FLAG_GRANT_PREFIX_URI_PERMISSION;
 
     // ---------------------------------------------------------------------
     // ---------------------------------------------------------------------
@@ -8326,3 +8326,9 @@ export default class Intent {
     //     return (mFlags & FLAG_ACTIVITY_NEW_DOCUMENT) == FLAG_ACTIVITY_NEW_DOCUMENT;
     // }
 }
+
+Intent.ACTION_DEFAULT = Intent.ACTION_VIEW;
+Intent.FLAG_ACTIVITY_NEW_DOCUMENT = Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET;
+Intent.IMMUTABLE_FLAGS = Intent.FLAG_GRANT_READ_URI_PERMISSION |
+        Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION |
+        Intent.FLAG_GRANT_PREFIX_URI_PERMISSION;
