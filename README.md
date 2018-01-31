@@ -7,7 +7,7 @@ You can call native function `startActivity` in react-native to do something wit
 ## Installation
 
 1. `npm install react-native-intent-launcher` 
-2. `rnpm link react-native-intent-launcher`
+2. `react-native link react-native-intent-launcher`
 
 ## Usage
 ```
