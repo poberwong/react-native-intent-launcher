@@ -60,11 +60,17 @@ public class IntentLauncherModule extends ReactContextBaseJavaModule implements 
         if (params.hasKey(ATTR_ACTION)) {
             intent.setAction(params.getString(ATTR_ACTION));
         }
-        if (params.hasKey(ATTR_DATA)) {
-            intent.setData(Uri.parse(params.getString(ATTR_DATA)));
-        }
-        if (params.hasKey(ATTR_TYPE)) {
-            intent.setType(params.getString(ATTR_TYPE));
+        // setting data resets type; and setting type resets data; if you have both, you need to set them at the same time
+        // https://developer.android.com/guide/components/intents-filters.html#Types (see 'Data' section)
+        if (params.hasKey(ATTR_DATA) && params.hasKey(ATTR_TYPE)) {
+            intent.setDataAndType(Uri.parse(params.getString(ATTR_DATA)), params.getString(ATTR_TYPE));
+        } else {
+            if (params.hasKey(ATTR_DATA)) {
+                intent.setData(Uri.parse(params.getString(ATTR_DATA)));
+            }
+            if (params.hasKey(ATTR_TYPE)) {
+                intent.setType(params.getString(ATTR_TYPE));
+            }
         }
         if (params.hasKey(TAG_EXTRA)) {
             intent.putExtras(Arguments.toBundle(params.getMap(TAG_EXTRA)));
