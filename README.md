@@ -27,6 +27,9 @@ you can view the code in [Example](https://github.com/Bob1993/react-native-inten
 * `category` String
 * `flags` String
 * `extra` Object
+* `packageName` String
+* `className` String
+* `flags` Number
 
 In the `IntentConstant`, we provide some constants for these properties, you can look up document provided by google to find out property we didn't support currently.
 
