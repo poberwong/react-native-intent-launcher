@@ -5,7 +5,7 @@ def safeExtGet(prop, fallback) {
 apply plugin: "com.android.library"
 
 android {
-    compileSdkVersion safeExtGet("compileSdkVersion", 28.0.2)
+    compileSdkVersion safeExtGet("compileSdkVersion", "28.0.2")
     buildToolsVersion safeExtGet("buildToolsVersion", 28)
 
     defaultConfig {
