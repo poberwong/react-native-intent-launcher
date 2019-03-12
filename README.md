@@ -10,7 +10,7 @@ You can call native function `startActivity` in react-native to do something wit
 2. `react-native link react-native-intent-launcher`
 
 ## Usage
-```
+```javascript
 import IntentLauncher, { IntentConstant } from 'react-native-intent-launcher'
 ...
 IntentLauncher.startActivity({
