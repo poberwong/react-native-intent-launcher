@@ -21,16 +21,14 @@ IntentLauncher.startActivity({
 // check if app is installed by package name
 IntentLauncher.isAppInstalled('wtf.swell')
   .then((result) => {
-    console.log('isAppInstalled', result);
-    Alert.alert('isAppInstalled', JSON.stringify(result));
+    console.log('isAppInstalled yes');
   })
   .catch((error) => console.warn('isAppInstalled: no', error));
 
 // open another app by package name
 IntentLauncher.startAppByPackageName('wtf.swell')
   .then((result) => {
-    console.log('startAppByPackageName', result);
-    Alert.alert('startAppByPackageName', JSON.stringify(result));
+    console.log('startAppByPackageName started');
   })
   .catch((error) => console.warn('startAppByPackageName: could not open', error));
 ...
