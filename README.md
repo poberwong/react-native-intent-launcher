@@ -20,7 +20,7 @@ IntentLauncher.startActivity({
 
 // open another app by package name
 IntentLauncher.startOtherApp({
-  packageName: 'org.kinecosystem.kinit',
+  packageName: 'wtf.swell',
   })
   .then((result) => {
     // success
