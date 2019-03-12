@@ -17,8 +17,20 @@ IntentLauncher.startActivity({
 	action: 'android.settings.APPLICATION_DETAILS_SETTINGS',
 	data: 'package:com.example'
 })
+
+// open another app by package name
+IntentLauncher.startOtherApp({
+  packageName: 'org.kinecosystem.kinit',
+  })
+  .then((result) => {
+    // success
+    console.log('startOtherApp');
+  })
+  .catch((error) => console.warn('startOtherApp could not start', error));
 ...
 ```
+
+
 you can view the code in [Example](https://github.com/Bob1993/react-native-intent-launcher/blob/master/Example/index.android.js) of the Repository
 
 ## Properties
