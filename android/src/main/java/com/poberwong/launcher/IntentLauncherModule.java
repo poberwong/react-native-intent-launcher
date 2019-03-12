@@ -27,9 +27,11 @@ public class IntentLauncherModule extends ReactContextBaseJavaModule implements 
     private static final String ATTR_PACKAGE_NAME = "packageName";
     private static final String ATTR_CLASS_NAME = "className";
     Promise promise;
+    ReactApplicationContext reactContext;
 
     public IntentLauncherModule(ReactApplicationContext reactContext) {
         super(reactContext);
+        this.reactContext = reactContext;
         reactContext.addActivityEventListener(this);
     }
 
@@ -76,6 +78,23 @@ public class IntentLauncherModule extends ReactContextBaseJavaModule implements 
             intent.addCategory(params.getString(ATTR_CATEGORY));
         }
         getReactApplicationContext().startActivityForResult(intent, REQUEST_CODE, null); // 暂时使用当前应用的任务栈
+    }
+
+    @ReactMethod
+    public void startOtherApp(ReadableMap params, final Promise promise) {
+        this.promise = promise;
+
+        if (params.hasKey(ATTR_PACKAGE_NAME)) {
+            Intent launchIntent = this.reactContext.getPackageManager().getLaunchIntentForPackage(params.getString(ATTR_PACKAGE_NAME));
+            if (launchIntent != null) {
+                getReactApplicationContext().startActivity(launchIntent); // null pointer check in case package name was not found
+                return;
+            } else {
+                this.promise.reject("could not start app");
+                return;
+            }
+        }
+        this.promise.reject("package name missing");
     }
 
     @Override
