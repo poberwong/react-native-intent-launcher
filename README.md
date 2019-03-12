@@ -18,20 +18,23 @@ IntentLauncher.startActivity({
 	data: 'package:com.example'
 })
 
-// open another app by package name
-IntentLauncher.startOtherApp({
-  packageName: 'wtf.swell',
-  })
+// check if app is installed by package name
+IntentLauncher.isAppInstalled('wtf.swell')
   .then((result) => {
-    // success
-    console.log('startOtherApp');
+    console.log('isAppInstalled', result);
+    Alert.alert('isAppInstalled', JSON.stringify(result));
   })
-  .catch((error) => console.warn('startOtherApp could not start', error));
+  .catch((error) => console.warn('isAppInstalled: no', error));
+
+// open another app by package name
+IntentLauncher.startAppByPackageName('wtf.swell')
+  .then((result) => {
+    console.log('startAppByPackageName', result);
+    Alert.alert('startAppByPackageName', JSON.stringify(result));
+  })
+  .catch((error) => console.warn('startAppByPackageName: could not open', error));
 ...
 ```
-
-
-you can view the code in [Example](https://github.com/Bob1993/react-native-intent-launcher/blob/master/Example/index.android.js) of the Repository
 
 ## Properties
 * `action` String
