@@ -1,17 +1,20 @@
 package com.poberwong.launcher;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.ComponentName;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.facebook.react.bridge.*;
-
-import java.io.Console;
-import java.util.Set;
-import java.util.Iterator;
+import com.facebook.react.bridge.ActivityEventListener;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Promise;
+import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContextBaseJavaModule;
+import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.WritableMap;
 
 /**
  * Created by poberwong on 16/6/30.
@@ -81,21 +84,30 @@ public class IntentLauncherModule extends ReactContextBaseJavaModule implements 
     }
 
     @ReactMethod
-    public void startOtherApp(ReadableMap params, final Promise promise) {
-        this.promise = promise;
+    public void isAppInstalled(String packageName, final Promise promise) {
+        try {
+            this.reactContext.getPackageManager().getPackageInfo(packageName, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            promise.reject("app not found");
+            return;
+        }
+        promise.resolve(true);
+    }
 
-        if (params.hasKey(ATTR_PACKAGE_NAME)) {
-            Intent launchIntent = this.reactContext.getPackageManager().getLaunchIntentForPackage(params.getString(ATTR_PACKAGE_NAME));
+    @ReactMethod
+    public void startAppByPackageName(String packageName, final Promise promise) {
+        if (packageName != null) {
+            Intent launchIntent = this.reactContext.getPackageManager().getLaunchIntentForPackage(packageName);
             if (launchIntent != null) {
-                getReactApplicationContext().startActivity(launchIntent); // null pointer check in case package name was not found
-                this.promise.resolve(true);
+                getReactApplicationContext().startActivity(launchIntent);
+                promise.resolve(true);
                 return;
             } else {
-                this.promise.reject("could not start app");
+                promise.reject("could not start app");
                 return;
             }
         }
-        this.promise.reject("package name missing");
+        promise.reject("package name missing");
     }
 
     @Override
