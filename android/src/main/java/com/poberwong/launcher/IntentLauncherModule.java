@@ -1,17 +1,20 @@
 package com.poberwong.launcher;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.ComponentName;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.facebook.react.bridge.*;
-
-import java.io.Console;
-import java.util.Set;
-import java.util.Iterator;
+import com.facebook.react.bridge.ActivityEventListener;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Promise;
+import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContextBaseJavaModule;
+import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.WritableMap;
 
 /**
  * Created by poberwong on 16/6/30.
@@ -27,9 +30,11 @@ public class IntentLauncherModule extends ReactContextBaseJavaModule implements 
     private static final String ATTR_PACKAGE_NAME = "packageName";
     private static final String ATTR_CLASS_NAME = "className";
     Promise promise;
+    ReactApplicationContext reactContext;
 
     public IntentLauncherModule(ReactApplicationContext reactContext) {
         super(reactContext);
+        this.reactContext = reactContext;
         reactContext.addActivityEventListener(this);
     }
 
@@ -76,6 +81,33 @@ public class IntentLauncherModule extends ReactContextBaseJavaModule implements 
             intent.addCategory(params.getString(ATTR_CATEGORY));
         }
         getReactApplicationContext().startActivityForResult(intent, REQUEST_CODE, null); // 暂时使用当前应用的任务栈
+    }
+
+    @ReactMethod
+    public void isAppInstalled(String packageName, final Promise promise) {
+        try {
+            this.reactContext.getPackageManager().getPackageInfo(packageName, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            promise.reject("app not found");
+            return;
+        }
+        promise.resolve(true);
+    }
+
+    @ReactMethod
+    public void startAppByPackageName(String packageName, final Promise promise) {
+        if (packageName != null) {
+            Intent launchIntent = this.reactContext.getPackageManager().getLaunchIntentForPackage(packageName);
+            if (launchIntent != null) {
+                getReactApplicationContext().startActivity(launchIntent);
+                promise.resolve(true);
+                return;
+            } else {
+                promise.reject("could not start app");
+                return;
+            }
+        }
+        promise.reject("package name missing");
     }
 
     @Override

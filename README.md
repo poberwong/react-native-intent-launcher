@@ -10,16 +10,29 @@ You can call native function `startActivity` in react-native to do something wit
 2. `react-native link react-native-intent-launcher`
 
 ## Usage
-```
+```javascript
 import IntentLauncher, { IntentConstant } from 'react-native-intent-launcher'
 ...
 IntentLauncher.startActivity({
 	action: 'android.settings.APPLICATION_DETAILS_SETTINGS',
 	data: 'package:com.example'
 })
+
+// check if app is installed by package name
+IntentLauncher.isAppInstalled('wtf.swell')
+  .then((result) => {
+    console.log('isAppInstalled yes');
+  })
+  .catch((error) => console.warn('isAppInstalled: no', error));
+
+// open another app by package name
+IntentLauncher.startAppByPackageName('wtf.swell')
+  .then((result) => {
+    console.log('startAppByPackageName started');
+  })
+  .catch((error) => console.warn('startAppByPackageName: could not open', error));
 ...
 ```
-you can view the code in [Example](https://github.com/Bob1993/react-native-intent-launcher/blob/master/Example/index.android.js) of the Repository
 
 ## Properties
 * `action` String
