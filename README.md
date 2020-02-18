@@ -2,7 +2,11 @@
 [![version](https://img.shields.io/npm/v/react-native-intent-launcher.svg)](https://www.npmjs.com/package/react-native-intent-launcher) [![downloads](https://img.shields.io/npm/dm/react-native-intent-launcher.svg?style=flat)](https://www.npmjs.com/package/react-native-intent-launcher)
 [![downloads](https://img.shields.io/npm/dt/react-native-intent-launcher.svg?style=flat)](https://www.npmjs.com/package/react-native-intent-launcher)  
 
+
 call native function `startActivity` in react-native
+
+isPackageInstalled and isAppInstalled method is to check to see if the app is installed
+openApp and startAppByPackageName method will run the app when it is installed.
 
 ## Why Fork
 
