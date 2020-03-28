@@ -14,6 +14,11 @@ Original Repository is [react-native-intent-launcher](https://github.com/poberwo
 
 Fixes the following issues when building React Native 0.60 or later.
 
+```
+WARNING: Configuration 'compile' is obsolete and has been replaced with 'implementation' and 'api'.
+It will be removed at the end of 2018. For more information see: http://d.android.com/r/tools/update-dependency-configurations.html
+```
+
 And
 
 Added isPackageInstalled, openApp method
@@ -21,12 +26,6 @@ Added isPackageInstalled, openApp method
 Use isPackageInstalled method when isAppInstalled method doesn't work.
 
 Use openApp method when startAppByPackageName method doesn't work.
-
-
-```
-WARNING: Configuration 'compile' is obsolete and has been replaced with 'implementation' and 'api'.
-It will be removed at the end of 2018. For more information see: http://d.android.com/r/tools/update-dependency-configurations.html
-```
 
 ## Description
 You can call native function `startActivity` in react-native to do something with `Intent` which can only be solved with android native code
