@@ -15,6 +15,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.ReadableMapKeySetIterator; //*.using at openApp
 
 /**
  * Created by poberwong on 16/6/30.
@@ -99,6 +100,38 @@ public class IntentLauncherModule extends ReactContextBaseJavaModule implements 
         }
         promise.resolve(true);
     }
+
+    //*.Provide by appcreatier@gmail.com
+	@ReactMethod
+	public void isPackageInstalled(String packageName, final Promise promise) {
+		Intent sendIntent = this.reactContext.getPackageManager().getLaunchIntentForPackage(packageName);
+		if (sendIntent == null) {
+			promise.resolve(false);
+			return;
+		}
+		promise.resolve(true);
+	}
+
+    //*.Provide by appcreatier@gmail.com
+	@ReactMethod
+	public void openApp(String packageName, ReadableMap extras, final Promise promise) {
+		Intent sendIntent = this.reactContext.getPackageManager().getLaunchIntentForPackage(packageName);
+		if (sendIntent == null) {
+			promise.resolve(false);
+			return;
+		}
+
+		final ReadableMapKeySetIterator it = extras.keySetIterator();
+		while(it.hasNextKey()) {
+			final String key = it.nextKey();
+			final String value = extras.getString(key);
+			sendIntent.putExtra(key, value);
+		}
+
+		sendIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+		this.reactContext.startActivity(sendIntent);
+		promise.resolve(true);
+	}
 
     @ReactMethod
     public void startAppByPackageName(String packageName, final Promise promise) {

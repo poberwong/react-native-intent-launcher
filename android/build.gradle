@@ -5,7 +5,7 @@ def safeExtGet(prop, fallback) {
 apply plugin: "com.android.library"
 
 android {
-    compileSdkVersion safeExtGet("compileSdkVersion", "28.0.2")
+    compileSdkVersion safeExtGet("compileSdkVersion", "28.0.3") //*. < "28.0.2"
     buildToolsVersion safeExtGet("buildToolsVersion", 28)
 
     defaultConfig {
@@ -16,7 +16,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:+"
-    compile "com.facebook.react:react-native:+"  // From node_modules
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "com.android.support:appcompat-v7:+"
+    implementation "com.facebook.react:react-native:+"  // From node_modules
 }

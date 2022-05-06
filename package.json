@@ -1,6 +1,6 @@
 {
-  "name": "react-native-intent-launcher",
-  "version": "0.2.1",
+  "name": "react-native-android-intent-launcher",
+  "version": "0.3.0",
   "description": "call native function about intent in react-native android",
   "main": "index.js",
   "scripts": {
@@ -8,12 +8,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Bob1993/react-native-intent-launcher.git"
+    "url": "https://github.com/AppCreatier/react-native-android-intent-launcher.git"
   },
-  "author": "poberwong",
+  "originalAuthor": "poberwong",
+  "author": "appcreatier@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Bob1993/react-native-intent-launcher/issues"
+    "url": "https://github.com/AppCreatier/react-native-android-intent-launcher/issues"
   },
-  "homepage": "https://github.com/Bob1993/react-native-intent-launcher#readme"
+  "homepage": "https://github.com/AppCreatier/react-native-android-intent-launcher#readme"
 }
